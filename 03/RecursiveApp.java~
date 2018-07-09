@@ -1,0 +1,60 @@
+package week03;
+import java.lang.Math;
+
+/**
+ *Recursive class used to find and sum digits in a long.
+ *@author Nathan Laing.
+ */
+public class RecursiveApp{
+
+    /**
+     *Variable for summing digits.
+     */    
+    private long sum = 0;
+
+    /**
+     *Main method: creates a new obj to test on.
+     * @param args the args of main.
+     */
+    public static void main(String [] args){
+        
+        RecursiveApp x = new RecursiveApp();
+    }
+    
+    /**
+     *Returns the number of digits in a long.
+     *@param n the long
+     *@return returns # of digits in n.
+     */
+    public long digits(long n){
+        if(n < 10){
+            return 1;
+        }
+        return 1 + digits(n/10);
+    }
+
+    /**
+     *Returns the sum of the digits.
+     *@param n the long.
+     *@return the sum of the digits in n.
+     */
+    public long sumOfDigits(long n){
+        boolean isPositive = (n >= 0);
+        n = Math.abs(n);
+        sum = sum + (n % 10);
+        n = n/10;
+        if(n==0){
+            if(isPositive){
+                return sum;
+            }else{
+                return -sum;
+            }
+        }else{
+            if(isPositive){
+                return sumOfDigits(n);
+            }else{
+                return sumOfDigits(n);
+            }
+        }
+    }
+}

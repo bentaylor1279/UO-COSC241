@@ -1,0 +1,71 @@
+package week08;
+
+import java.util.*;
+import java.io.*;
+
+public class DigramGenerator implements WordGenerator {
+
+    private char [] firstLetters; //Used for representing letter freq
+    
+    private String [] pairs; //Used for associating commonly followed letters
+
+    private Random random; //Source of randomness
+
+    public DigramGenerator(Random r) {
+        
+        random = r;
+        
+        File file = new File("first-letters.txt");
+
+        try{
+            
+            Scanner sc = new Scanner(file);
+            String text = "";
+            text = sc.nextLine();
+            sc.close();
+            for(int i = 0; i < text.length(); i++){
+                firstLetters[i] = text.charAt(i);
+            }
+            
+        } catch (FileNotFoundException e){
+            
+            System.out.println(e);
+        }
+        
+        File file2 = new File("continuations.txt");
+
+        try{
+            Scanner sc2 = new Scanner(file2);
+            int i = 0;
+            while(sc2.hasNextLine()){
+                pairs[i] = sc2.nextLine();
+                i++;
+            }
+            sc2.close();
+            
+        } catch (FileNotFoundException e){
+            
+            System.out.println(e);
+        }
+            
+    }
+    
+    public String nextWord(int n){
+        
+        StringBuilder result = new StringBuilder();
+
+        for(int i = 0; i < n; i++){
+            int r = random.nextInt();
+            
+            if(i==0){
+                char c = firstLetters[r];
+                result.append(c);
+            } else {
+                int r2 = random.nextInt();
+                char c = pairs[r].charAt(r2);
+                result.append(c);
+            }
+        }
+        return result.toString();
+    }
+}
